@@ -6,6 +6,7 @@ My formulae.
   - `libtiff-more.rb`: needed to enable WebP and ZSTD at compile time.
   - `jasper-nogl.rb`: remove OpenGL needs.
   - *requires* `homebrew-core/libtiff` to be shadowed.
+- `imagemagick-ginjo.rb`: be able to read lossless WebP compressed tiff.
 
 ## Manually ___shadow___ `homebrew-core/libtiff`
 
