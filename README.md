@@ -1,26 +1,33 @@
 # Homebrew Ginjo
 
-My formulae.
+Customized formulae:
 
-- `graphicsmagick-ginjo.rb`: for tiff WebP lossless compression.
-  - `libtiff-more.rb`: needed to enable WebP and ZSTD at compile time.
-  - `jasper-nogl.rb`: remove OpenGL needs.
-  - *requires* `homebrew-core/libtiff` to be shadowed.
-- `imagemagick-ginjo.rb`: be able to read lossless WebP compressed tiff.
+- **To compress "*WebP Lossless*" in TIFF images**:
+  - `libtiff-more.rb`: enable WebP and ZSTD compression.
+    - `homebrew-core/libtiff` needs to be shadowed explicitly. See below.
 
-## Manually ___shadow___ `homebrew-core/libtiff`
+- The rest are just for reducing dependencies:
+  - `vips.rb`: without X11
+  - `imagemagick-ginjo.rb`: without X11
+  - `graphicsmagick-ginjo.rb`: without X11
+    - `jasper-nogl.rb`: without OpenGL
+
+## Shadow `homebrew-core/libtiff`
+
+Manully make `homebrew-core/libtiff` into a ***keg_only*** brew. So I don't have to maintain all the formulae that depend on `homebrew-core/libtiff`.
 
 1. `brew edit libtiff`
 2. put a `keg_only "Let libtiff-more handle"` line in the class definition
 
-## Verify `graphicsmagick-ginjo.rb` work
+## Verify WebP lossless compression
 
-    gm convert -verbose test.png -compress webp -define tiff:webp-lossless=true -quality 100 test.webp.tif
+- *graphicsmagick*:
+  - `gm convert -verbose test.png -compress webp -define tiff:webp-lossless=true -quality 100 test.webp.tif`
 
-## How do I install these formulae?
+- *vips*:
+  - `vips tiffsave in.png test.webp.tif --compression webp --Q 100 --tile --lossless --vips-progress`
 
-Just `brew install <formula>`. This is the default tap for Homebrew and is installed by default.
+- *imagemagick*:
+  - `magick convert` doesn't support WebP compression.
+  - `magick compare` can read WebP compressed TIFF (`libtiff-more`).
 
-## More Documentation, Troubleshooting, Contributing, Security, Community, Donations, License and Sponsors
-
-See these sections in [Homebrew/brew's README](https://github.com/Homebrew/brew#homebrew).
