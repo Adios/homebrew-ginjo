@@ -13,10 +13,8 @@ class ImagemagickGinjo < Formula
   end
 
   depends_on "pkg-config" => :build
-  depends_on "freetype"
   depends_on "jpeg"
   depends_on "libheif"
-  depends_on "liblqr"
   depends_on "libomp"
   depends_on "libpng"
   depends_on "adios/ginjo/libtiff-more"
@@ -30,10 +28,6 @@ class ImagemagickGinjo < Formula
   uses_from_macos "bzip2"
   uses_from_macos "libxml2"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "libx11"
-  end
 
   skip_clean :la
 
@@ -56,10 +50,13 @@ class ImagemagickGinjo < Formula
       --with-openexr
       --with-webp=yes
       --with-heic=yes
+      --without-djvu
       --without-gslib
       --with-gs-font-dir=#{HOMEBREW_PREFIX}/share/ghostscript/fonts
-      --with-lqr
+      --without-lqr
       --without-fftw
+      --without-freetype
+      --without-fontconfig
       --without-pango
       --without-wmf
       --without-x
